@@ -20,13 +20,13 @@ extension Observable where Element: ObservableType {
 	- parameter observables: a sequence of observables which will all be immediately subscribed to
 	- returns: An observable sequence that contains elements from the latest observable sequence that emitted elements
 	*/
-    public static func cascade<Sequence: Swift.Sequence>(_ observables: Sequence) -> Observable<Element.Element> where Sequence.Element == Element {
+    public static func cascade<Sequence: Swift.Sequence>(_ observables: Sequence) -> RxSwift.Observable<Element.Element> where Sequence.Element == Element {
         let flow = Array(observables)
         if flow.isEmpty {
-            return Observable<Element.Element>.empty()
+            return RxSwift.Observable<Element.Element>.empty()
         }
 
-        return Observable<Element.Element>.create { observer in
+        return RxSwift.Observable<Element.Element>.create { observer in
             var current = 0, initialized = false
             var subscriptions: [SerialDisposable?] = flow.map { _ in SerialDisposable() }
 
