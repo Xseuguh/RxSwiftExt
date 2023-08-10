@@ -17,14 +17,14 @@ extension Observable {
      
      - returns: An observable sequence only containing the distinct contiguous elements, based on predicate, from the source sequence.
      */
-    public func distinct(_ predicate: @escaping (Element) throws -> Bool) -> Observable<Element> {
+    public func distinct(_ predicate: @escaping (Element) throws -> Bool) -> RxSwift.Observable<Element> {
         var cache = [Element]()
-        return flatMap { element -> Observable<Element> in
+        return flatMap { element -> RxSwift.Observable<Element> in
             if try cache.contains(where: predicate) {
-                return Observable<Element>.empty()
+                return RxSwift.Observable<Element>.empty()
             } else {
                 cache.append(element)
-                return Observable<Element>.just(element)
+                return RxSwift.Observable<Element>.just(element)
             }
         }
     }
@@ -36,14 +36,14 @@ extension Observable where Element: Hashable {
      - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
      - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
      */
-    public func distinct() -> Observable<Element> {
+    public func distinct() -> RxSwift.Observable<Element> {
         var cache = Set<Element>()
-        return flatMap { element -> Observable<Element> in
+        return flatMap { element -> RxSwift.Observable<Element> in
             if cache.contains(element) {
-                return Observable<Element>.empty()
+                return RxSwift.Observable<Element>.empty()
             } else {
                 cache.insert(element)
-                return Observable<Element>.just(element)
+                return RxSwift.Observable<Element>.just(element)
             }
         }
     }
@@ -55,14 +55,14 @@ extension Observable where Element: Equatable {
      - seealso: [distinct operator on reactivex.io](http://reactivex.io/documentation/operators/distinct.html)
      - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
      */
-    public func distinct() -> Observable<Element> {
+    public func distinct() -> RxSwift.Observable<Element> {
         var cache = [Element]()
-        return flatMap { element -> Observable<Element> in
+        return flatMap { element -> RxSwift.Observable<Element> in
             if cache.contains(element) {
-                return Observable<Element>.empty()
+                return RxSwift.Observable<Element>.empty()
             } else {
                 cache.append(element)
-                return Observable<Element>.just(element)
+                return RxSwift.Observable<Element>.just(element)
             }
         }
     }
